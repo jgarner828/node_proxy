@@ -3,7 +3,10 @@ import logger from "../logger.js";
 // Handler for HTML responses (with injection capability)
 export const handleHtmlResponse = (proxyRes, req, res) => {
     logger.info(`[proxyRes] HTML response for: ${req.method} ${req.url}`);
+
+
     let body = [];
+
 
     proxyRes.on('data', (chunk) => {
         logger.info(`[proxyRes HTML] chunk length: ${chunk.length}`);
@@ -11,8 +14,8 @@ export const handleHtmlResponse = (proxyRes, req, res) => {
         let html = chunk.toString('utf8');
         logger.info(`[proxyRes HTML] chunk content : ${html}`);
 
-        
-        // find h1 and change value
+
+        // find h1 and if exists change value then update html.
         const h1Index = html.indexOf('<h1>');
         const h1EndIndex = html.indexOf('</h1>');
         if (h1Index !== -1 && h1EndIndex !== -1) {
@@ -21,8 +24,8 @@ export const handleHtmlResponse = (proxyRes, req, res) => {
             logger.info(`[proxyRes HTML] Modified h1 tag`);
         }
 
+        // find </body> and inject script before it if exists
         const bodyEndIndex = html.lastIndexOf('</body>');
-        
         if (bodyEndIndex !== -1) {
             html = html.substring(0, bodyEndIndex) + 
                 '<script>alert("Hello Proxy injection!");</script>' + 

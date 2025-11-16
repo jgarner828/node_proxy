@@ -34,10 +34,10 @@ router.get('/helloInterception', (req, res) => {
 
     res.send(
         `<html>
-            <head><title>Hello Interception</title></head>
+            <head><title>Interception and Redirection</title></head>
             <body>
                 <h1>Hello Interception</h1>
-                <p>This is a test page for interception.</p>
+                <p>This is a test page for request interception and redirection to a different endpoint.</p>
             </body>
         </html>`
     );
@@ -77,10 +77,14 @@ router.get('/dangerousRequest', (req, res) => {
         `<html>
             <head><title>Dangerous Payload</title></head>
             <body>
+            <form>
                 <h1>Dangerous Payload</h1>
-                <input type="text">Malicious Input Box</input>
+                <input id="input" type="text">Malicious Input Box</input>
+                <button type="submit" onclick=submitForm()>Submit</button>
+            </form>
             </body>
-        </html>`
+        </html>
+    `
     );
 });
 
