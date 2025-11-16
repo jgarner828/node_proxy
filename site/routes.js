@@ -67,4 +67,21 @@ router.get('/stream', (req, res) => {
     });
 });
 
+
+router.get('/dangerousRequest', (req, res) => {
+    res.setHeader('Content-Type', 'text/html');
+    res.setHeader('Cache-Control', 'no-cache');
+    res.setHeader('Connection', 'keep-alive');
+
+    res.send(
+        `<html>
+            <head><title>Dangerous Payload</title></head>
+            <body>
+                <h1>Dangerous Payload</h1>
+                <input type="text">Malicious Input Box</input>
+            </body>
+        </html>`
+    );
+});
+
 export default router;
